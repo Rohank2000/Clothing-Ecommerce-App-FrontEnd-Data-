@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 const Header = () => {
     return (
         <header>
-            <nav className="navbar navbar-dark bg-dark">
+            <nav className="navbar bg-dark">
                 <div className="container-fluid">
                     <div className="row w-100 align-items-center">
-                        <div className="col-4 text-start">
+                        <div className="col text-start">
                             <Link className="navbar-brand" to="/"><img style={{ height: 60 }} src="https://i.ibb.co/0jrTH47w/e441cf04-f545-4b39-99fb-447d2b4a2b3e.jpg" alt="Ecommerce Clothing Brand Logo" /></Link>
                         </div>
 
-                        <div className="col-4 text-center">
+                        <div className="col text-center">
                             <form className="d-flex justify-content-center" role="search">
                                 <input
                                     className="form-control me-2"
                                     type="search"
                                     placeholder="Search"
                                     aria-label="Search"
-                                    style={{ maxWidth: "60%" }}
+                                    style={{ maxWidth: "80%" }}
                                 />
                                 <button className="btn btn-outline-success" type="submit">
                                     Search
@@ -25,7 +25,7 @@ const Header = () => {
                             </form>
                         </div>
 
-                        <div className="col-4 text-end">
+                        <div className="col text-end">
                             <Link className="position-relative d-inline-block me-3" to="/user/wishlist">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                                     <path d="M480-388q51-47 82.5-77.5T611-518q17-22 23-38.5t6-35.5q0-36-26-62t-62-26q-21 0-40.5 8.5T480-648q-12-15-31-23.5t-41-8.5q-36 0-62 26t-26 62q0 19 5.5 35t22.5 38q17 22 48 52.5t84 78.5ZM200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z" />
