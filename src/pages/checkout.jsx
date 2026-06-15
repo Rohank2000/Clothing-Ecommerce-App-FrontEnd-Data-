@@ -101,7 +101,7 @@ const Checkout = () => {
 			</div>
 
 			{cartData.length > 0 && (
-				<div className="d-md-none position-fixed bottom-0 start-0 w-100 bg-white border-top shadow p-3" style={{ zIndex: 1030 }}>
+				<div className="d-md-none position-fixed bottom-0 start-0 w-100 bg-white border-top shadow p-0" style={{ zIndex: 1030 }}>
 					<div className="d-flex justify-content-between align-items-center mb-2">
 						<strong>Total Amount</strong>
 						<strong className="fs-5">{formatPrice(totalPrice)}</strong>

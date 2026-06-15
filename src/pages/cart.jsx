@@ -37,8 +37,8 @@ const Cart = () => {
 
   return (
     <div className="container mt-4">
-      <h1 className="mb-5">Cart</h1>
-      <div className="row g-4 bg-secondary-subtle p-0">
+      <h1 className="mb-4">Cart</h1>
+      <div className="align-items-center justify-content-center bg-secondary-subtle p-0">
         <div className="col-12 col-lg-8">
           {loading ? (
             <div className="text-center">
@@ -47,7 +47,10 @@ const Cart = () => {
               </div>
             </div>
           ) : error ? "Error Occurred" : cartData.length === 0 ? (
-            <p className="text-primary mt-3">No Products Available In Cart</p>
+            // <p className="text-primary m-3">No Products Available In Cart</p>
+            <div className="text-primary d-flex">
+            <p className="text-primary m-3">No Products Available In Cart</p>
+					</div>
           ) : (
             cartData.map((item, index) => (
               <ProductCard3 key={index} product={item} />
