@@ -1,10 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const useCartToDatabase = (userId, cart) => {
+const useCartToDatabase =  (userId, cart, onError) => {
+    const mountCount = useRef(0);
+
     useEffect(() => {
+        mountCount.current += 1;
+        if (mountCount.current <= 2) return;
+
         const cartToDatabase = async () => {
 
-            const url = "https://clothing-ecommerce-app-back-end-dat.vercel.app/api/cart";
+            const url = `${BASE_URL}/api/cart`;
 
             const payload = { userId: userId, cartArray: cart };
             try {
@@ -20,12 +25,13 @@ const useCartToDatabase = (userId, cart) => {
                 const data = await postData.json();
 
                 if (!postData.ok) {
-                    console.log("Error Occured While Syncing Cart Data To Database", data.error);
 
+                    if (onError) onError("Failed to sync cart data");
                 }
 
             } catch (error) {
-                console.log("Network Error Occured While Syncing Cart Data To Database", error.message);
+
+                if (onError) onError("Network error while syncing cart");
             }
         }
         cartToDatabase();

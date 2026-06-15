@@ -1,8 +1,11 @@
-export default function Address() {
+import AddressManager from "../component/addressManager";
+
+ const Address = ()=> {
 	return (
-		<div style={{padding: '1rem'}}>
-			<h1>Address</h1>
-			<p>Placeholder Address page.</p>
+		<div className="container mt-4">
+			<AddressManager />
 		</div>
 	)
 }
+
+export default Address;

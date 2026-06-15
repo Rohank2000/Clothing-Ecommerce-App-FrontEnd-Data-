@@ -1,10 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const useWishlistToDatabase = (userId, wishlist) => {
+const useWishlistToDatabase = (userId, wishlist, onError) => {
+
+    const mountCount = useRef(0);
+
     useEffect(() => {
+        mountCount.current += 1;
+        if (mountCount.current <= 2) return;
+
         const wishlistDataToDatabase = async () => {
 
-            const url = "https://clothing-ecommerce-app-back-end-dat.vercel.app/api/wishlist";
+            const url = `${BASE_URL}/api/wishlist`;
 
             const wishListData = {
                 userId: userId, wishlistArray: wishlist
@@ -22,12 +28,13 @@ const useWishlistToDatabase = (userId, wishlist) => {
                 const data = await postData.json();
 
                 if (!postData.ok) {
-                    console.log("Error Occured While Syncing WishList to Database", data.error);
 
+                    if (onError) onError("Failed to sync wishlist data");
                 }
 
             } catch (error) {
-                console.log("Network Error Occured While Syncing WishList to Database", error.message);
+
+                if (onError) onError("Network error while syncing wishlist");
             }
         }
         wishlistDataToDatabase();

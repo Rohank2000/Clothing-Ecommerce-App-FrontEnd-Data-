@@ -10,21 +10,101 @@ export const EcommerceBrandProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
     const [addresses, setAddresses] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [alertInfo, setAlertInfo] = useState({ message: "", type: "success", visible: false });
 
-    useCartToDatabase(userId, cart);
-    useWishlistToDatabase(userId, wishlist);
+    const triggerAlert = (message, type = "success") => {
 
-    const { Data } = useFetchForGET(
-        "https://clothing-ecommerce-app-back-end-dat.vercel.app/api/fetch/addresses",
+        setAlertInfo({ message, type, visible: true });
+
+
+        setTimeout(() => {
+
+            setAlertInfo((prev) => ({ ...prev, visible: false }));
+        }, 3000);
+    };
+
+    useCartToDatabase(userId, cart, (msg) => triggerAlert(msg, "danger"));
+    useWishlistToDatabase(userId, wishlist, (msg) => triggerAlert(msg, "danger"));
+
+    const { data: cartData, loading: cartLoading } = useFetchForGET(
+        `${BASE_URL}/api/fetch/cart?userId=${userId}`,
         []
     );
 
     useEffect(() => {
-        if (Array.isArray(Data)) setAddresses(Data);
-    }, [Data]);
+        if (cartLoading) return;
+        const fetchedCart = cartData?.data?.cart;
+        if (fetchedCart && Array.isArray(fetchedCart.cart)) {
+            setCart(fetchedCart.cart);
+        }
+    }, [cartData, cartLoading]);
+
+    const { data: wishlistData, loading: wishlistLoading } = useFetchForGET(
+        `${BASE_URL}/api/fetch/wishlist?userId=${userId}`,
+        []
+    );
+
+    useEffect(() => {
+        if (wishlistLoading) return;
+        const fetchedWishlist = wishlistData?.data?.wishList;
+        if (fetchedWishlist && Array.isArray(fetchedWishlist.wishlist)) {
+            setWishlist(fetchedWishlist.wishlist);
+        }
+    }, [wishlistData, wishlistLoading]);
+
+
+    const { data } = useFetchForGET(
+        `${BASE_URL}/api/fetch/addresses`,
+        []
+    );
+
+    useEffect(() => {
+        const addressArray = data?.data?.address;
+        if (Array.isArray(addressArray)) setAddresses(addressArray);
+    }, [data]);
+
+    const addToCart = (product, QuantityToggleValue = 1) => {
+
+        const isAlreadyInCart = cart.find((item) => item.productId === product._id);
+
+        if (isAlreadyInCart) {
+            const incrementQuantity = cart.map((item) =>
+                item.productId === product._id
+                    ? { ...item, quantity: item.quantity + QuantityToggleValue }
+                    : item)
+            setCart(incrementQuantity);
+            triggerAlert("Quantity Updated", "info");
+        } else {
+            const addItemToCart = [...cart, { productId: product._id, quantity: QuantityToggleValue }]
+            setCart(addItemToCart);
+            triggerAlert("Added to Cart", "success");
+        }
+    };
+
+    const removeCart = (prod) => {
+        setCart((cart) => cart.filter((item) => item.productId != prod._id))
+        triggerAlert("Removed from Cart", "warning");
+    }
+
+    const toggleWishlist = (product) => {
+
+        const isAlreadyInWishlist = wishlist.find((item) => item === product._id);
+
+        if (isAlreadyInWishlist) {
+            const wishlistItemRemove = wishlist.filter((item) => item !== product._id);
+            setWishlist(wishlistItemRemove);
+            triggerAlert("Removed from Wishlist", "warning");
+        } else {
+            const wishlistItemAdd = [...wishlist, product._id];
+            setWishlist(wishlistItemAdd);
+            triggerAlert("Added to Wishlist", "success");
+        }
+    };
+
 
     const addNewAddress = async (newAddressData) => {
-        const url = "https://clothing-ecommerce-app-back-end-dat.vercel.app/api/addresses";
+        const url = `${BASE_URL}/api/addresses`;
         try {
             const postData = await fetch(url, {
                 method: "POST",
@@ -37,18 +117,19 @@ export const EcommerceBrandProvider = ({ children }) => {
             const data = await postData.json();
 
             if (!postData.ok) {
-                console.log("Error Occured While Syncing Address Data To Database", data.error);
+                triggerAlert("Failed to Add Address", "danger");
                 return false;
             }
             setAddresses((prev) => [...prev, data.data.address]);
+            triggerAlert("New Address Added", "success");
             return true;
         } catch (error) {
-            console.log("Network Error Occured While Syncing Cart Data To Database", error.message);
+            triggerAlert("Network Error", "danger");
         }
     };
 
     const editAddress = async (addressId, updatedData) => {
-        const url = `https://clothing-ecommerce-app-back-end-dat.vercel.app/api/addresses/${addressId}`;
+        const url = `${BASE_URL}/api/addresses/${addressId}`;
         try {
             const postData = await fetch(url, {
                 method: "POST",
@@ -61,7 +142,7 @@ export const EcommerceBrandProvider = ({ children }) => {
             const data = await postData.json();
 
             if (!postData.ok) {
-                console.log("Backend Error While Syncing Update Address Data To Database", data.error);
+                triggerAlert("Failed to Update Address", "danger");
                 return false;
             }
 
@@ -70,36 +151,38 @@ export const EcommerceBrandProvider = ({ children }) => {
                     ad._id === addressId ? data.data.address : ad
                 )
             );
+            triggerAlert("Address Updated", "success");
             return true;
 
         } catch (error) {
-            console.log("Network Error Occured While Syncing Update Address Data To Database", error.message);
+            triggerAlert("Network Error", "danger");
         }
     };
 
     const removeAddress = async (addressId) => {
-        const url = "https://clothing-ecommerce-app-back-end-dat.vercel.app/api/remove/addresses";
+        const url = `${BASE_URL}/api/remove/addresses`;
         try {
             const deletedData = await fetch(url, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ addressId }),
+                body: JSON.stringify({ _id: addressId }),
             });
 
             const data = await deletedData.json();
 
             if (!deletedData.ok) {
-                console.log("Backend Error While Deleting Address Data From the Database", data.error);
+                triggerAlert("Failed to Delete Address", "danger");
                 return false;
             }
 
             setAddresses((prev) => prev.filter((ad) => ad._id !== addressId));
+            triggerAlert("Address Deleted", "warning");
             return true;
 
         } catch (error) {
-            console.log("Network Error While Deleting Address Data From the Database", error.message);
+            triggerAlert("Network Error", "danger");
         }
     };
 
@@ -111,10 +194,17 @@ export const EcommerceBrandProvider = ({ children }) => {
                 setCart,
                 wishlist,
                 setWishlist,
+                addToCart,
+                removeCart,
+                toggleWishlist,
                 addresses,
                 addNewAddress,
                 editAddress,
                 removeAddress,
+                totalPrice,
+                setTotalPrice,
+                alertInfo,
+                triggerAlert,
             }}
         >
             {children}
