@@ -28,7 +28,7 @@
 ### Installation
 
 ```bash
-cd clothingapp
+cd Major_Project_1_Frontend
 npm install
 Environment Variables
 Create a .env file:
