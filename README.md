@@ -1,18 +1,66 @@
-# React + Vite
+# 👕 ClothingApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A modern e-commerce frontend for clothing — built with React + Vite.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Browse categories, featured collections, and curated picks
+- Product listing and detailed product view
+- Cart & wishlist synced to backend
+- Full address management (add/edit/delete)
+- Checkout with order placement
+- Order confirmation & order history
+- Live product search
+- Toast notifications for all actions
+- Responsive design (Bootstrap 5)
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+**React 19 · Vite 8 · React Router 7 · Bootstrap 5 · React Context**
 
-Note: This will impact Vite dev & build performances.
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+- Node.js 18+
+- npm
+
+### Installation
+
+```bash
+cd clothingapp
+npm install
+Environment Variables
+Create a .env file:
+BASE_URL=https://your-backend-url.vercel.app
+Run Development Server
+npm run dev
+Build for Production
+npm run build
+npm run preview
+
+🧭 Routes
+Path
+/
+/category/productlist/:categoryId
+/category/productlist/details/:clothingId
+/user/wishlist
+/user/cart
+/user/profile
+/user/profile/address
+/user/profile/checkout
+/user/profile/order-success
+/user/profile/orders
+🔌 API Endpoints Used
+Endpoint
+GET /api/fetch/categories
+GET /api/fetch/clothing
+GET /api/fetch/cart?userId=...
+GET /api/fetch/wishlist?userId=...
+GET /api/fetch/addresses
+POST /api/addresses
+POST /api/addresses/:id
+DELETE /api/remove/addresses
+POST /api/orders
+🙌 Acknowledgements
+Built as Major Project 1 — all product data and persistence handled by a separate backend service.
