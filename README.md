@@ -1,4 +1,4 @@
-# 👕 ClothingApp
+# 👕 ClothingApp (Major Project 1 FrontEnd)
 
 > A modern e-commerce frontend for clothing — built with React + Vite.
 
