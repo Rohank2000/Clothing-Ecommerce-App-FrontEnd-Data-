@@ -34,11 +34,11 @@ const ProductCard2 = ({ product }) => {
                             <strong style={{ fontSize: "0.85rem" }}>₹{product.price}</strong>
                         </p>
 
-                        <div className="d-grid gap-1 mt-auto">
-                            <button type="button" className="btn btn-primary py-0" style={{ fontSize: "0.7rem", lineHeight: "1.8" }} onClick={(event) => handleAddToCart(event)}>
+                        <div className="d-grid gap-1 mt-auto overflow-hidden">
+                            <button type="button" className="btn btn-primary btn-sm text-nowrap" style={{ fontSize: "0.7rem" }} onClick={(event) => handleAddToCart(event)}>
                                 Add To Cart
                             </button>
-                            <button type="button" className="btn btn-secondary py-0" style={{ fontSize: "0.7rem", lineHeight: "1.8" }} onClick={(event) => handleToggleWishlist(event)}>
+                            <button type="button" className="btn btn-secondary btn-sm text-nowrap" style={{ fontSize: "0.7rem" }} onClick={(event) => handleToggleWishlist(event)}>
                                 {wishlist.includes(product._id) ? "Remove" : "Add To WishList"}
                             </button>
                         </div>

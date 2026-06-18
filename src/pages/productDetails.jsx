@@ -69,10 +69,10 @@ const ProductDetails = () => {
 							/>
 							<div className="card-body" >
 								<div className="d-grid gap-2">
-									<button type="button" className="btn btn-primary btn-sm" onClick={() => handleToggleValue(productInfo, QuantityToggleValue)}>
-										Add To Cart
-									</button>
-									<button type="button" className="btn btn-secondary btn-sm" onClick={() => toggleWishlist(productInfo)}>
+                                    <button type="button" className="btn btn-primary btn-sm text-nowrap" onClick={() => handleToggleValue(productInfo, QuantityToggleValue)}>
+                                        Add To Cart
+                                    </button>
+                                    <button type="button" className="btn btn-secondary btn-sm text-nowrap" onClick={() => toggleWishlist(productInfo)}>
 										{wishlist.includes(productInfo._id) ? "Remove From WishList" : "Add To WishList"}
 									</button>
 								</div>

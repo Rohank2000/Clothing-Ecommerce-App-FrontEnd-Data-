@@ -50,10 +50,10 @@ const ProductCard3 = ({ product }) => {
                                 </div>
                             </div>
                             <div className="d-grid gap-2 mt-auto">
-                                <button type="button" className="btn btn-danger btn-sm btn-equal" onClick={handleRemoveCart}>
+                                <button type="button" className="btn btn-danger btn-sm text-nowrap" onClick={handleRemoveCart}>
                                     Remove from Cart
                                 </button>
-                                <button type="button" className="btn btn-secondary btn-sm btn-equal" onClick={handleToggleWishlist}>
+                                <button type="button" className="btn btn-secondary btn-sm text-nowrap" onClick={handleToggleWishlist}>
                                     {wishlist.includes(product._id) ? "Remove From WishList" : "Add To WishList"}
                                 </button>
                             </div>
