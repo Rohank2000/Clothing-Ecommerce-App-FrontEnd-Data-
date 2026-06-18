@@ -15,6 +15,7 @@ const AddressFormModal = ({ formData, onChange, onSubmit, isSubmitting, editId, 
             <input
               type="text"
               placeholder="Mukesh Chhabra"
+              onInput={(event) => event.target.value = event.target.value.replace(/[^a-zA-Z\s]/g, "")}
               maxLength="50"
               className="form-control"
               name="FullName"

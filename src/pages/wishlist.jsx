@@ -1,5 +1,5 @@
 import useFetchForGET from "../hooks/useFetchForGET";
-import ProductCard2 from "../component/productCard2";
+import ProductCard from "../component/productCard";
 import useEcommerceContext from "../context/useEcommerceContext";
 
 const WishList = () => {
@@ -10,7 +10,7 @@ const WishList = () => {
 
 	const productData = data?.data?.clothing || [];
 
-	const productInfo = productData.filter((item) => wishlist.includes(item._id));
+	const productInfoForWishlist = productData.filter((item) => wishlist.includes(item._id));
 
 	return (
 		<div className="container mt-4"  >
@@ -22,15 +22,15 @@ const WishList = () => {
 							<span className="visually-hidden">Loading...</span>
 						</div>
 					</div>
-				) : error ? "Error Occurred..." : productInfo.length === 0 ? (
+				) : error ? "Error Occurred..." : productInfoForWishlist.length === 0 ? (
 					<div className="text-primary d-flex">
 						<p className="text-center m-3">No Product Available in Wishlist</p>
 					</div>
 				) : (
                     <div className="row g-3 bg-secondary-subtle p-2 p-md-4">
-                        {productInfo?.map((item, index) => (
+                        {productInfoForWishlist?.map((item, index) => (
                             <div className="col-6 col-md-4 col-lg-3" key={index}>
-                                <ProductCard2 product={item} />
+                                <ProductCard productInfo={item} />
                             </div>
                         ))}
 

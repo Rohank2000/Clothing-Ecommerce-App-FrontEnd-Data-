@@ -23,8 +23,15 @@ const ProductCard2 = ({ product }) => {
                         <img src={product.productImg} alt={product.productName} className="w-100 h-100 object-fit-cover" />
                     </div>
                     <div className="card-body d-flex flex-column p-2" >
+                        <div className="d-flex align-items-center" style={{ fontSize: "0.75rem" }}>
+                            <span className="fw-bold me-1">{product.rating}</span>
+                            <span>⭐</span>
+                        </div>
                         <p className="card-title m-0 text-truncate" style={{ fontSize: "0.8rem", fontWeight: 500 }}>
                             {product.productName}
+                        </p>
+                        <p className="card-text m-0">
+                            <strong style={{ fontSize: "0.85rem" }}>₹{product.price}</strong>
                         </p>
 
                         <div className="d-grid gap-1 mt-auto">

@@ -23,6 +23,12 @@ const ProfileModal = ({ isOpen, onClose }) => {
                     zIndex: 1000,
                 }}
             >
+                <button
+                    onClick={onClose}
+                    type="button"
+                    className="btn-close position-absolute top-0 end-0 m-2"
+                    aria-label="Close"
+                />
                 <div className="card-body text-start">
                     <div className="d-flex justify-content-start align-items-center card-title">
                         <img className="img-fluid rounded-circle w-25 p-3" src="https://i.ibb.co/bjLYcnr5/d8d2e380-22f7-4bfc-914b-e9ecf30f810b.jpg" alt="profile-pic" />
@@ -41,10 +47,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
                     </Link>
                     <br />
                     <br />
-                    <div className="text-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" /></svg>
-                        Log Out
-                    </div>
                 </div>
             </div>
         </>
