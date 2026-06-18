@@ -49,7 +49,7 @@ const Header = () => {
                     height: 28px;
                 }
                 .logo-img {
-                    height: 60px;
+                    height: 45px;
                 }
                 @media (max-width: 576px) {
                     .nav-icon svg {
@@ -57,7 +57,7 @@ const Header = () => {
                         height: 22px;
                     }
                     .logo-img {
-                        height: 36px;
+                        height: 25px;
                     }
                 }
                 .search-dropdown {
